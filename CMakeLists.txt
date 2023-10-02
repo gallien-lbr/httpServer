@@ -4,6 +4,6 @@ project(httpServer)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(httpServer
-        http_tcpServer_linux.h
+        http_tcpServer_win.h
         server_linux.cpp
-        http_tcpServer_linux.cpp)
+        http_tcpServer_win.cpp)
