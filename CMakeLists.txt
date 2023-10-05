@@ -7,3 +7,6 @@ add_executable(httpServer
         http_tcpServer_win.h
         server_linux.cpp
         http_tcpServer_win.cpp)
+
+
+target_link_libraries(httpServer libwsock32.a)
