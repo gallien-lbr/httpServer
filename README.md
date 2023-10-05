@@ -1,7 +1,7 @@
 # httpServer
 
 own implementation of
-https://github.com/OsasAzamegbe/http-server
+* https://github.com/OsasAzamegbe/http-server
 
 In summary, our server will have a socket that:
 

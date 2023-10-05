@@ -3,6 +3,7 @@
 #define INCLUDED_HTTP_TCPSERVER_LINUX
 
 #include <cstdio>
+// inclure la librairie socket
 #include <winsock.h>;
 #include <cstdlib>
 #include <string>;

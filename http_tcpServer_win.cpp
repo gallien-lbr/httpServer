@@ -28,8 +28,8 @@ namespace http
                                                              m_socketAddress(), m_socketAddress_len(sizeof(m_socketAddress)),
                                                              m_serverMessage(buildResponse()), m_wsaData()
     {
-        m_socketAddress.sin_family = AF_INET;
-        m_socketAddress.sin_port = htons(m_port);
+        m_socketAddress.sin_family = AF_INET; // Domaine du SOCKET (= IP v4)
+        m_socketAddress.sin_port = htons(m_port); // Host to network
         m_socketAddress.sin_addr.s_addr = inet_addr(m_ip_address.c_str());
 
         if (startServer() != 0)
@@ -47,11 +47,14 @@ namespace http
 
     int TcpServer::startServer()
     {
+        //  initializes the Winsock library for the application. using version 2 Winsock
+        // . &m_wsaData is a pointer to a WSADATA structure that will receive details of the Windows Sockets implementation.
         if (WSAStartup(MAKEWORD(2, 0), &m_wsaData) != 0)
         {
             exitWithError("WSAStartup failed");
+            return -1;
         }
-
+        // Create a new socket , SOCK_STREAM = TCP, protocol
         m_socket = socket(AF_INET, SOCK_STREAM, 0);
         if (m_socket < 0)
         {
@@ -65,6 +68,7 @@ namespace http
             return 1;
         }
 
+        // returns success code
         return 0;
     }
 
@@ -93,7 +97,7 @@ namespace http
         {
             log("====== Waiting for a new connection ======\n\n\n");
             acceptConnection(m_new_socket);
-
+            // buffer => data received
             char buffer[BUFFER_SIZE] = {0};
             bytesReceived = recv(m_new_socket, buffer, BUFFER_SIZE, 0);
             if (bytesReceived < 0)
@@ -113,6 +117,7 @@ namespace http
 
     void TcpServer::acceptConnection(SOCKET &new_socket)
     {
+        // définition d'un nouveau socket
         new_socket = accept(m_socket, (sockaddr *)&m_socketAddress, &m_socketAddress_len);
         if (new_socket < 0)
         {
