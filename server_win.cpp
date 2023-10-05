@@ -2,6 +2,7 @@
 int main()
 {
     using namespace http;
-    TcpServer server = TcpServer("0.0.0.0",8001);
+    TcpServer server = TcpServer("127.0.0.1",8001);
+    server.startListen();
     return 0;
 }
